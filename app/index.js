@@ -1,8 +1,5 @@
-const fs = require('fs'); 
-const path = require('path');
 const app = require('express')();
 const port = process.env.PORT || 8000; 
-
 
 import {isCached, getCachedPoem, cachePoem} from './cache.js';
 import {readAllAuthors, readAuthorsPoems, readPoem} from './db.js';
@@ -19,6 +16,13 @@ let getPoem = (author, title, cb) => {
 		});
 	}
 };
+
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 app.get('/author', (req, res) =>{
